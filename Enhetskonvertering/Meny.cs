@@ -2,9 +2,27 @@
 
 namespace Enhetskonvertering
 {
-    public struct Meny
+    public class Meny
     {
+        public const string INPUTERROR = "Du har matat in ett felaktigt värde";
+        public const string WRONG_INPUT = INPUTERROR + ", välj en siffra i menyn";
+
         private static int result;
+        protected IDisplayHandler display;
+        private IInputHandler input;
+        private konverter konvert;
+
+        public Meny(IDisplayHandler displayHandler, IInputHandler inputHandler, konverter konverter)
+        {
+            display = displayHandler;
+            input = inputHandler;
+            konvert = konverter;
+        }
+
+        protected static string ErrorMess(string typ, string unit)
+        {
+            return INPUTERROR + $", ang en giltlig {unit} i {typ}.";
+        }
 
         public enum MainMenyChoices
         {
@@ -60,27 +78,110 @@ namespace Enhetskonvertering
             exit=4
         }
 
-        /*        Huvudmenyn                                            */
-        public static void MainMeny()
+        public class ConsolInputHandler : IInputHandler
         {
-            
+            private IDisplayHandler display;
+
+
+            public ConsolInputHandler(IDisplayHandler displayHandler)
+            {
+                display = displayHandler;
+            }
+
+            public bool ReadInput(out int result)
+            {
+                display.ShowMessege("\nAnge ditt val: ");
+
+                bool succes = int.TryParse(Console.ReadLine(), out result);
+
+                if (!succes)
+                {
+                    display.ShowMessege(WRONG_INPUT);
+
+                }
+
+                return succes;
+            }
+
+            public bool ReadInput(Meny.TempMenyChoices tempTyp, out double result)
+            {
+                bool succes = double.TryParse(Console.ReadLine(), out result);
+
+                if (succes)
+                {
+                    switch (tempTyp)
+                    {
+                        case Meny.TempMenyChoices.celsius:
+                            if (result < -273.15) //-273,15 absoluta noll  Celisus
+                            {
+                                succes = false;
+                            }
+                            break;
+                        case Meny.TempMenyChoices.farenheit:
+                            if (result < -459.67) // -459.67 absoluta noll Fahrenhiet 
+                            {
+                                succes = false;
+                            }
+                            break;
+                        case Meny.TempMenyChoices.kelvin:
+                            if (result < 0)
+                            {
+                                succes = false; // 0 absoluta noll Kelvin
+                            }
+                            break;
+                    }
+                }
+
+                if (!succes)
+                {
+                   display.ShowMessege(Meny.ErrorMess(tempTyp.ToString(), "temperatur"));
+                }
+
+
+                return succes;
+
+
+            }
+
+            public bool ReadInput(string typ, string unit, out double result)
+            {
+                bool succes = double.TryParse(Console.ReadLine(), out result);
+
+                if (succes)
+                {
+                    if (result < 0)
+                    {
+                        succes = false;
+                    }
+                }
+
+
+                if (!succes)
+                {
+                   display.ShowMessege(Meny.ErrorMess(typ, unit));
+                }
+
+
+                return succes;
+
+
+            }
+        }
+
+        /*        Huvudmenyn                                            */
+        public void MainMeny()
+        {
+
+            string menu = "Meny\n1)  Temperatur konvertering\n2)  Längd uträkning\n3)  Beräkna hastighet\n" +
+                          "4)  Area\n5)  Volym\n6)  Ohms lag\n7)  Exit\n";
+
             while (true)
             {
                 do
                 {
-                    Console.Clear();
-                    Console.WriteLine("Meny\n");
-                    Console.WriteLine("1)  Temperatur konvertering");
-                    Console.WriteLine("2)  Längd uträkning");
-                    Console.WriteLine("3)  Beräkna hastighet");
-                    Console.WriteLine("4)  Area");
-                    Console.WriteLine("5)  Volym");
-                    Console.WriteLine("6)  Ohms lag");
-                    Console.WriteLine("7)  Exit");
-                    
-
+                    display.ShowMessege(menu);
                 }
-                while (!Utilities.ReadInput(out result));
+                while (!input.ReadInput(out result));
 
 
                 switch ((MainMenyChoices)result)
@@ -107,7 +208,7 @@ namespace Enhetskonvertering
                         Environment.Exit(0);
                         break;
                     default:
-                        Utilities.ErrorMess();
+                        display.ShowMessege(WRONG_INPUT);
                         break;
                 }
 
@@ -116,7 +217,7 @@ namespace Enhetskonvertering
         }
 
         /*        TemperaturMeny                                        */
-        public static void TempMeny()
+        public void TempMeny()
         {
 
             bool run = true;
@@ -128,14 +229,14 @@ namespace Enhetskonvertering
                 do
                 {
                     Console.Clear();
-                    Console.WriteLine("Tempratur meny\n");
-                    Console.WriteLine("1) Celsius ");
-                    Console.WriteLine("2) Fahrenheit");
-                    Console.WriteLine("3) Kelvin");
-                    Console.WriteLine("4) Till huvudmenyn");
+                    display.ShowMessege("Tempratur meny\n");
+                    display.ShowMessege("1) Celsius ");
+                    display.ShowMessege("2) Fahrenheit");
+                    display.ShowMessege("3) Kelvin");
+                    display.ShowMessege("4) Till huvudmenyn");
                     
                 }
-                while (!Utilities.ReadInput(out result));
+                while (!input.ReadInput(out result));
 
                  
                 switch ((TempMenyChoices)result)
@@ -153,7 +254,7 @@ namespace Enhetskonvertering
                             run = false;
                             break;
                         default:
-                        Utilities.ErrorMess();
+                            display.ShowMessege(WRONG_INPUT);
                             break;
                 }
             
@@ -161,35 +262,35 @@ namespace Enhetskonvertering
         }
 
         /*        TemperaturMeny Stöd metod för tempkonverting          */
-        public static void TempKonvMeny(TempMenyChoices tempTyp)
+        public void TempKonvMeny(TempMenyChoices tempTyp)
         {
             double result;
 
             /*      Tar ett korrekt värde switch ej korrekt loopar om         */
             do
             {
-                Console.Write("Ange tempraturen i {0}: ", tempTyp.ToString());
+                display.ShowLine($"Ange tempraturen i {tempTyp}: ");
             }
-            while (!Utilities.ReadInputTemp(tempTyp, out result));
+            while (!input.ReadInput(tempTyp, out result));
 
 
             switch (tempTyp)
             {
                 case TempMenyChoices.celsius:
-                    Konverter.Celsiuss(result);
+                    konvert.Celsiuss(result);
                     break;
                 case TempMenyChoices.farenheit:
-                    Konverter.Farenheits(result);
+                    konvert.Farenheits(result);
                     break;
                 case TempMenyChoices.kelvin:
-                    Konverter.Kelvins(result);
+                    konvert.Kelvins(result);
                     break;
             }
 
         }
 
         /*        LängderMeny                                           */
-        public static void LengthMeny()
+        public void LengthMeny()
         {
             bool run = true;
 
@@ -200,16 +301,16 @@ namespace Enhetskonvertering
                 do
                 {
                     Console.Clear();
-                    Console.WriteLine("Längd Meny\n");
-                    Console.WriteLine("1) Centemeter ");
-                    Console.WriteLine("2) Meter");
-                    Console.WriteLine("3) Inch");
-                    Console.WriteLine("4) Yards");
-                    Console.WriteLine("5) Foot");
-                    Console.WriteLine("6) Till huvudmenyn");
+                    display.ShowMessege("Längd Meny\n");
+                    display.ShowMessege("1) Centemeter ");
+                    display.ShowMessege("2) Meter");
+                    display.ShowMessege("3) Inch");
+                    display.ShowMessege("4) Yards");
+                    display.ShowMessege("5) Foot");
+                    display.ShowMessege("6) Till huvudmenyn");
                     
                 }
-                while (!Utilities.ReadInput(out result));
+                while (!input.ReadInput(out result));
 
                 switch ((LengthMenyChoices)result)
                 {
@@ -232,8 +333,8 @@ namespace Enhetskonvertering
                     run = false;
                     break;
                 default:
-                        Utilities.ErrorMess();
-                    break;
+                        display.ShowMessege(WRONG_INPUT);
+                        break;
 
                 }
 
@@ -241,7 +342,7 @@ namespace Enhetskonvertering
         }
 
         /*        LängderMeny  val av lenghtkonverting                  */
-        public static void LenghtKonvMeny(LengthMenyChoices lengthTyp)
+        public void LenghtKonvMeny(LengthMenyChoices lengthTyp)
         {
      
             double result;
@@ -251,25 +352,25 @@ namespace Enhetskonvertering
             {
                 Console.Write("Ange längd i {0}: ", lengthTyp.ToString());
             }
-            while (!Utilities.ReadInput(lengthTyp.ToString(), "längden", out result));
+            while (!input.ReadInput(lengthTyp.ToString(), "längden", out result));
 
 
             switch (lengthTyp)
             {
                 case LengthMenyChoices.cm:
-                    Konverter.Centimeter(result);
+                    konvert.Centimeter(result);
                     break;
                 case LengthMenyChoices.m:
-                    Konverter.Meters(result);
+                    konvert.Meters(result);
                     break;
                 case LengthMenyChoices.inch:
-                    Konverter.Inches(result);
+                    konvert.Inches(result);
                     break;           
                 case LengthMenyChoices.yard:
-                    Konverter.Yards(result);
+                    konvert.Yards(result);
                     break;
                 case LengthMenyChoices.foot:
-                    Konverter.Foots(result);
+                    konvert.Foots(result);
                     break;
                 case LengthMenyChoices.exit:
                     break;
@@ -278,7 +379,7 @@ namespace Enhetskonvertering
         }
 
         /*        FartMenyn                                             */
-        public static void SpeedMeny()
+        public void SpeedMeny()
         {
             double dataOne, dataTwo;
             bool run = true;
@@ -290,15 +391,15 @@ namespace Enhetskonvertering
                 do
                 {
                     Console.Clear();
-                    Console.WriteLine("SpeedMeny\n");
-                    Console.WriteLine("1) Beräkna hastighet");
-                    Console.WriteLine("2) Beräkna Tid");
-                    Console.WriteLine("3) Beräkna Distans");
-                    Console.WriteLine("4) Till huvudmenyn");
+                    display.ShowMessege("SpeedMeny\n");
+                    display.ShowMessege("1) Beräkna hastighet");
+                    display.ShowMessege("2) Beräkna Tid");
+                    display.ShowMessege("3) Beräkna Distans");
+                    display.ShowMessege("4) Till huvudmenyn");
                     
                   
                 }
-                while (!Utilities.ReadInput(out result));
+                while (!input.ReadInput(out result));
 
                 switch ((SpeedMenyChoices)result)
                 {
@@ -308,14 +409,14 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange sträcka i km: ");
                         }
-                        while(!Utilities.ReadInput("km", "sträcka", out dataOne));
+                        while(!input.ReadInput("km", "sträcka", out dataOne));
 
                         do 
                         {
                             Console.Write("Ange restid i minuter: ");
                         }
-                        while (!Utilities.ReadInput("minuter", "restiden", out dataTwo));
-                        Konverter.Speed(dataOne, dataTwo);
+                        while (!input.ReadInput("minuter", "restiden", out dataTwo));
+                        konvert.Speed(dataOne, dataTwo);
                         break;
 
                     case SpeedMenyChoices.time:
@@ -323,34 +424,34 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange sträcka i km: ");
                         }
-                        while (!Utilities.ReadInput("km", "sträcka", out dataOne));
+                        while (!input.ReadInput("km", "sträcka", out dataOne));
 
                         do
                         {
                             Console.Write("Ange hastigheten i km/h: ");
                         }
-                        while (!Utilities.ReadInput("km/h", "hastighet", out dataTwo));
-                        Konverter.Time(dataOne, dataTwo);
+                        while (!input.ReadInput("km/h", "hastighet", out dataTwo));
+                        konvert.Time(dataOne, dataTwo);
                         break;
                     case SpeedMenyChoices.distance:
                         do
                         {
                             Console.Write("Ange hastighet i km/h: ");
                         }
-                        while (!Utilities.ReadInput("km/h", "hastighet", out dataOne));
+                        while (!input.ReadInput("km/h", "hastighet", out dataOne));
 
                         do
                         {
                             Console.Write("Ange resetid i minuter: ");
                         }
-                        while (!Utilities.ReadInput("minuter", "resetid", out dataTwo));
-                        Konverter.Distance(dataOne, dataTwo);
+                        while (!input.ReadInput("minuter", "resetid", out dataTwo));
+                        konvert.Distance(dataOne, dataTwo);
                         break;
                     case SpeedMenyChoices.exit:
                         run = false;
                         break;
                     default:
-                        Utilities.ErrorMess();
+                        display.ShowMessege(WRONG_INPUT);
                         break;
 
                 }
@@ -358,7 +459,7 @@ namespace Enhetskonvertering
         }
 
         /*         Ytameny                                              */
-        public static void AreaMeny()
+        public void AreaMeny()
         {
             bool run = true;
             double dataOne, dataTwo;
@@ -369,13 +470,13 @@ namespace Enhetskonvertering
                 do
                 {
                     Console.Clear();
-                    Console.WriteLine("Area Meny\n");
-                    Console.WriteLine("1) Rektangel ");
-                    Console.WriteLine("2) Triangel");
-                    Console.WriteLine("3) Cirkel");
-                    Console.WriteLine("4) Till huvudmenyn");
+                    display.ShowMessege("Area Meny\n");
+                    display.ShowMessege("1) Rektangel ");
+                    display.ShowMessege("2) Triangel");
+                    display.ShowMessege("3) Cirkel");
+                    display.ShowMessege("4) Till huvudmenyn");
                 }
-                while (!Utilities.ReadInput(out result));
+                while (!input.ReadInput(out result));
 
                 switch ((AreaAndVolymMenyChoices)result)
                 {
@@ -385,14 +486,14 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange basen i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "basen", out dataOne));
+                        while (!input.ReadInput("cm", "basen", out dataOne));
 
                         do
                         {
                             Console.Write("Ange höjden i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "höjden", out dataTwo));
-                        Konverter.Rektangel(dataOne, dataTwo);
+                        while (!input.ReadInput("cm", "höjden", out dataTwo));
+                        konvert.Rektangel(dataOne, dataTwo);
                         break;
 
                     case AreaAndVolymMenyChoices.triangel:
@@ -400,14 +501,14 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange basen i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "basen", out dataOne));
+                        while (!input.ReadInput("cm", "basen", out dataOne));
 
                         do
                         {
                             Console.Write("Ange höjden i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "höjden", out dataTwo));
-                        Konverter.Triangel(dataOne, dataTwo);
+                        while (!input.ReadInput("cm", "höjden", out dataTwo));
+                        konvert.Triangel(dataOne, dataTwo);
                         break;
                    
                     case AreaAndVolymMenyChoices.cirkel:
@@ -415,15 +516,15 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange radien i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "radie", out dataOne));                   
-                        Konverter.Cirkel(dataOne);
+                        while (!input.ReadInput("cm", "radie", out dataOne));                   
+                        konvert.Cirkel(dataOne);
                         break;
 
                     case AreaAndVolymMenyChoices.exit:
                         run = false;
                         break;
                     default:
-                        Utilities.ErrorMess();
+                        display.ShowMessege(WRONG_INPUT);
                         break;
 
                 }
@@ -432,7 +533,7 @@ namespace Enhetskonvertering
         }
 
         /*         Volymmeny                                            */
-        public static void VolymMeny()
+        public void VolymMeny()
         {
             bool run = true;
             double dataOne, dataTwo, dataThree;
@@ -443,14 +544,14 @@ namespace Enhetskonvertering
                 do
                 {
                     Console.Clear();
-                    Console.WriteLine("Volym Meny\n");
-                    Console.WriteLine("1) Rätblock ");
-                    Console.WriteLine("2) Pyramid");
-                    Console.WriteLine("3) Sphere");
-                    Console.WriteLine("4) Till huvudmenyn");
+                    display.ShowMessege("Volym Meny\n");
+                    display.ShowMessege("1) Rätblock ");
+                    display.ShowMessege("2) Pyramid");
+                    display.ShowMessege("3) Sphere");
+                    display.ShowMessege("4) Till huvudmenyn");
 
                 }
-                while (!Utilities.ReadInput(out result));
+                while (!input.ReadInput(out result));
 
                 switch ((AreaAndVolymMenyChoices)result)
                 {
@@ -460,18 +561,18 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange basen i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "basen", out dataOne));
+                        while (!input.ReadInput("cm", "basen", out dataOne));
                         do
                         {
                             Console.Write("Ange djup i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "djup", out dataTwo));
+                        while (!input.ReadInput("cm", "djup", out dataTwo));
                         do
                         {
                             Console.Write("Ange höjden i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "höjden", out dataThree));
-                        Konverter.Kub(dataOne, dataTwo, dataThree);
+                        while (!input.ReadInput("cm", "höjden", out dataThree));
+                        konvert.Kub(dataOne, dataTwo, dataThree);
                         break;
 
                     case AreaAndVolymMenyChoices.triangel:
@@ -479,18 +580,18 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange basen i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "basen", out dataOne));
+                        while (!input.ReadInput("cm", "basen", out dataOne));
                         do
                         {
                             Console.Write("Ange djup i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "djup", out dataTwo));
+                        while (!input.ReadInput("cm", "djup", out dataTwo));
                         do
                         {
                             Console.Write("Ange höjden i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "höjden", out dataThree));
-                        Konverter.Pyramid(dataOne, dataTwo, dataThree);
+                        while (!input.ReadInput("cm", "höjden", out dataThree));
+                        konvert.Pyramid(dataOne, dataTwo, dataThree);
                         break;
 
                     case AreaAndVolymMenyChoices.cirkel:
@@ -498,15 +599,15 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange radien i cm: ");
                         }
-                        while (!Utilities.ReadInput("cm", "radie", out dataOne));
+                        while (!input.ReadInput("cm", "radie", out dataOne));
                         
-                        Konverter.Sphere(dataOne);
+                        konvert.Sphere(dataOne);
                         break;
                     case AreaAndVolymMenyChoices.exit:
                         run = false;
                         break;
                     default:
-                        Utilities.ErrorMess();
+                        display.ShowMessege(WRONG_INPUT);
                         break;
 
                 }
@@ -515,7 +616,7 @@ namespace Enhetskonvertering
         }
 
         /*         ElMenyn                                              */
-        public static void ElMeny()
+        public void ElMeny()
         {
             bool run = true;
             double dataOne, dataTwo;
@@ -526,14 +627,14 @@ namespace Enhetskonvertering
                 do
                 {
                     Console.Clear();
-                    Console.WriteLine("El meny\n");
-                    Console.WriteLine("1) Spänning");
-                    Console.WriteLine("2) Ström");
-                    Console.WriteLine("3) Resistans");
-                    Console.WriteLine("4) Till huvudmenyn");
+                    display.ShowMessege("El meny\n");
+                    display.ShowMessege("1) Spänning");
+                    display.ShowMessege("2) Ström");
+                    display.ShowMessege("3) Resistans");
+                    display.ShowMessege("4) Till huvudmenyn");
 
                 }
-                while (!Utilities.ReadInput(out result));
+                while (!input.ReadInput(out result));
 
                 switch ((OhmMenyChoices)result)
                 {
@@ -543,14 +644,14 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange strömen i amp: ");
                         }
-                        while (!Utilities.ReadInput("amp", "ström", out dataOne));
+                        while (!input.ReadInput("amp", "ström", out dataOne));
 
                         do
                         {
                             Console.Write("Ange resistansen i ohm: ");
                         }
-                        while (!Utilities.ReadInput("ohm", "resistansen", out dataTwo));
-                        Konverter.Voltage(dataOne, dataTwo);
+                        while (!input.ReadInput("ohm", "resistansen", out dataTwo));
+                        konvert.Voltage(dataOne, dataTwo);
                         break;
 
                         case OhmMenyChoices.current:
@@ -558,14 +659,14 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange spänningen i volt: ");
                         }
-                        while (!Utilities.ReadInput("volt", "spänning", out dataOne));
+                        while (!input.ReadInput("volt", "spänning", out dataOne));
 
                         do
                         {
                             Console.Write("Ange resistansen i ohm: ");
                         }
-                        while (!Utilities.ReadInput("ohm", "resistansen", out dataTwo));
-                        Konverter.Current(dataOne, dataTwo);
+                        while (!input.ReadInput("ohm", "resistansen", out dataTwo));
+                        konvert.Current(dataOne, dataTwo);
                         break;
 
                         case OhmMenyChoices.resistance:
@@ -573,20 +674,20 @@ namespace Enhetskonvertering
                         {
                             Console.Write("Ange spänningen i volt: ");
                         }
-                        while (!Utilities.ReadInput("volt", "spänning", out dataOne));
+                        while (!input.ReadInput("volt", "spänning", out dataOne));
 
                         do
                         {
                             Console.Write("Ange strömmen i amp: ");
                         }
-                        while (!Utilities.ReadInput("amp", "strömmen", out dataTwo));
-                        Konverter.Resistance(dataOne, dataTwo);
+                        while (!input.ReadInput("amp", "strömmen", out dataTwo));
+                        konvert.Resistance(dataOne, dataTwo);
                         break;
                         case OhmMenyChoices.exit:
                         run = false;
                         break;
                     default:
-                        Utilities.ErrorMess();
+                        display.ShowMessege(WRONG_INPUT);
                         break;
 
                 }

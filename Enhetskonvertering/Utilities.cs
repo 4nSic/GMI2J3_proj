@@ -82,7 +82,7 @@ namespace Enhetskonvertering
 
             if (!succes)
             {
-                ErrorMess();
+                //ErrorMess();
 
             }
             Console.WriteLine();
@@ -90,11 +90,11 @@ namespace Enhetskonvertering
         }
 
         /*        Kalla på ett error meddelande                                      */
-        public static void ErrorMess()
-        {
-            Console.WriteLine((INPUTERROR + ", välj en siffra i menyn"));
-            PauseText();
-        }
+        //public static void ErrorMess()
+        //{
+        //    Console.WriteLine((INPUTERROR + ", välj en siffra i menyn"));
+        //    PauseText();
+        //}
 
         /*        Kalla på ett error meddelande för enheter och konverteringar       */
         public static void ErrorMess(string typ, string unit)
