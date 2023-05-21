@@ -1,7 +1,7 @@
 ﻿
 namespace Enhetskonvertering
 {
-    internal static class Celsius
+    public static class Celsius
     {
         public static double ToFarenheit(double celsius)
         {

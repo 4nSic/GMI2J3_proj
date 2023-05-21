@@ -1,7 +1,8 @@
 ﻿
 namespace Enhetskonvertering
 {
-    internal struct Movement
+
+    public struct Movement
     {
         private const int MINUTS_IN_AN_HOUR = 60;
 
