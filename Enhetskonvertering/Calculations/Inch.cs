@@ -1,7 +1,7 @@
 ﻿
 namespace Enhetskonvertering
 {
-    internal struct Inch
+    public struct Inch
     {
         private const double CM = 2.54;
         private const double METER = 0.0254;
