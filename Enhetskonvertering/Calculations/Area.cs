@@ -16,7 +16,7 @@ namespace Enhetskonvertering
             return basen * height / AREA;
         }
 
-        public static double Distance(double radius)
+        public static double Cirkel(double radius)
         {
             return Math.Pow(radius, AREA) * Math.PI;
         }    
