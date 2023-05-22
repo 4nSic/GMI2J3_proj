@@ -2,7 +2,7 @@
 
     namespace Enhetskonvertering
     {
-        internal struct Volume
+        public struct Volume
         {
             private const int AREA = 3;
 
