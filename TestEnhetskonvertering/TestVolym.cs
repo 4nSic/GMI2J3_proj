@@ -15,7 +15,7 @@ namespace TestEnhetskonvertering
         }
 
         /// <summary>
-        /// Test konvertera Tempraturen från Celsius till Fahrenheit
+        /// Test Kub
         /// </summary>
         [Test]
         public void Test_Volume_Kub()
@@ -33,6 +33,9 @@ namespace TestEnhetskonvertering
             Assert.That(actualAnswear, Is.EqualTo(expectedAnswer));
         }
 
+        /// <summary>
+        /// Test Pyramid
+        /// </summary>
         [Test]
         public void Test_Volume_Pyramid()
         {
@@ -50,6 +53,9 @@ namespace TestEnhetskonvertering
             Assert.That(actualAnswear, Is.EqualTo(expectedAnswer));
         }
 
+        /// <summary>
+        /// Test Sphere
+        /// </summary>
         [Test]
         public void Test_Volume_Sphere()
         {
