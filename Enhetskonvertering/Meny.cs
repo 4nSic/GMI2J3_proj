@@ -184,6 +184,7 @@ namespace Enhetskonvertering
             {
                 do
                 {
+                    display.ClearedDisplay();
                     display.ShowMessege(menu);
                 }
                 while (!input.ReadInput(out result));
@@ -233,7 +234,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();    
                     display.ShowMessege("Tempratur meny\n");
                     display.ShowMessege("1) Celsius ");
                     display.ShowMessege("2) Fahrenheit");
@@ -305,7 +306,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();
                     display.ShowMessege("Längd Meny\n");
                     display.ShowMessege("1) Centemeter ");
                     display.ShowMessege("2) Meter");
@@ -395,7 +396,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();       
                     display.ShowMessege("SpeedMeny\n");
                     display.ShowMessege("1) Beräkna hastighet");
                     display.ShowMessege("2) Beräkna Tid");
@@ -474,7 +475,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();
                     display.ShowMessege("Area Meny\n");
                     display.ShowMessege("1) Rektangel ");
                     display.ShowMessege("2) Triangel");
@@ -548,7 +549,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();
                     display.ShowMessege("Volym Meny\n");
                     display.ShowMessege("1) Rätblock ");
                     display.ShowMessege("2) Pyramid");
@@ -631,7 +632,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();
                     display.ShowMessege("El meny\n");
                     display.ShowMessege("1) Spänning");
                     display.ShowMessege("2) Ström");

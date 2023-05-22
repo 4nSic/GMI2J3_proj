@@ -31,13 +31,12 @@ namespace Enhetskonvertering
 
         public void ShowMessege(string messege)
         {
-            //Console.Clear();
             Console.WriteLine(messege);
         }
 
         public void ClearedDisplay()
         { 
-            Console.Clear(); 
+            Console.Clear();
         }
     }
 }
