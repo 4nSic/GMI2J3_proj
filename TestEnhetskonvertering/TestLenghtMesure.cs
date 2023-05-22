@@ -15,13 +15,11 @@ namespace TestEnhetskonvertering
     /// </summary>
     public class TestLenghtMesure
     {
-        //string messegeInABottle = "$\"Det fungerade inte {actualAnswear} {expectedAnswear}\"";
-        
+        private Meter meter;
         [OneTimeSetUp]
-        
-        public void Setup2()
+        public void Setup()
         {
-
+            meter = new Meter();
         }
 
         /// <summary>
@@ -31,15 +29,14 @@ namespace TestEnhetskonvertering
         public void Test_Konverter_From_Meter_To_Cm()
         {
             //Arrange
-            double meter = 5;
-            double expectedAnswear = meter * Meter.CM;
-            //double expectedAnswear = 500;
+            double testMeter = 5;
+            double expectedAnswer = 500;
 
             //Act
-            double actualAnswear = Meter.ToCm(meter);
+            double actualAnswear = meter.ToCm(testMeter);
 
             //Assert
-            Assert.That(actualAnswear, Is.EqualTo(expectedAnswear), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
+            Assert.That(actualAnswear, Is.EqualTo(expectedAnswer).Within(0.01), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswer}");
 
         }
 
@@ -51,15 +48,14 @@ namespace TestEnhetskonvertering
         {
 
             //Arrange
-            double meter = 5;
-            double expectedAnswear = meter / Meter.INCH;
-            //double expectedAnswear = 196.8505;
+            double testmeter = 5;
+            double expectedAnswear = 196.8505;
 
             //Act
-            double actualAnswear = Meter.ToInch(meter);
+            double actualAnswear = meter.ToInch(testmeter);
 
             //Assert
-            Assert.That(actualAnswear, Is.EqualTo(expectedAnswear), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
+            Assert.That(actualAnswear, Is.EqualTo(expectedAnswear).Within(0.01), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
 
         }
 
@@ -70,22 +66,15 @@ namespace TestEnhetskonvertering
         [Test]
         public void Test_Konverter_From_Meter_To_Yard()
         {
-
             //Arrange
-            double meter = 5;
-            double expectedAnswear = meter * Meter.YARD;
+            double testmeter = 5;
+            double expectedAnswear = 5.46807;
 
             //Act
-            double actualAnswear = Meter.ToYard(meter);
-            
-            //------------- Just for fun ----------------------------  
-            double roundeExpectedAnswer = Math.Round(expectedAnswear, 2);
-            double roundedActualAnswer = Math.Round(actualAnswear, 2);
-            //-------------------------------------------------------
-
-
+            double actualAnswear = meter.ToYard(testmeter);
+       
             //Act
-            Assert.That(roundedActualAnswer, Is.EqualTo(roundeExpectedAnswer),message:$"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
+            Assert.That(actualAnswear, Is.EqualTo(expectedAnswear).Within(0.01), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
         }
 
         /// <summary>
@@ -96,16 +85,14 @@ namespace TestEnhetskonvertering
         { 
         
             //Arrange
-            double meter = 5;
-            double expectedAnswear = meter * Meter.FOOT;
+            double testmeter = 5;
+            double expectedAnswear = 16.4042;
 
             //Assert
-            double actualAnswear = Meter.ToFoot(meter);
+            double actualAnswear = meter.ToFoot(testmeter);
 
             //Act
-            Assert.That(actualAnswear, Is.EqualTo(expectedAnswear), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
-
+            Assert.That(actualAnswear, Is.EqualTo(expectedAnswear).Within(0.01), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
         }
-
     }
 }

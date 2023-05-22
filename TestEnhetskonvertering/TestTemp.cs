@@ -1,17 +1,14 @@
 ﻿using Enhetskonvertering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestEnhetskonvertering
 {
     public class TestTemp
     {
-        [SetUp]
-        public void Setup3()
+        private Celsius celsius;
+        [OneTimeSetUp]
+        public void Setup()
         {
+            celsius = new Celsius();
         }
 
         /// <summary>
@@ -22,11 +19,11 @@ namespace TestEnhetskonvertering
         {
 
             //Arrange
-            double celsius = 5;
-            double expectedAnswear = (celsius * 9 / 5) + 32;
+            double celsiustest = 5;
+            double expectedAnswear = 41;
 
             //Act
-            double actualAnswear = Celsius.ToFarenheit(celsius);
+            double actualAnswear = celsius.ToFarenheit(celsiustest);
 
             //Assert
             Assert.That(actualAnswear, Is.EqualTo(expectedAnswear),message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
@@ -39,11 +36,11 @@ namespace TestEnhetskonvertering
         public void Test_From_Celsius_To_Kelvin()
         {
             //Arrange
-            double celsius = 5;
-            double expectedAnswear = celsius + 273.15;
+            double celsiustest = 5;
+            double expectedAnswear = 278.15;
 
             //Act
-            double actualAnswear = Celsius.ToKelvin(celsius);
+            double actualAnswear = celsius.ToKelvin(celsiustest);
 
             //Assert
             Assert.That(actualAnswear, Is.EqualTo(expectedAnswear), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");

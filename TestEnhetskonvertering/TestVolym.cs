@@ -9,9 +9,11 @@ namespace TestEnhetskonvertering
 {
     public class TestVolym
     {
-        [SetUp]
-        public void Setup3()
+        private Volume volume;
+        [OneTimeSetUp]
+        public void Setup()
         {
+            volume = new Volume();
         }
 
         /// <summary>
@@ -24,13 +26,13 @@ namespace TestEnhetskonvertering
             double basen = 10;
             double djup = 10;
             double height = 10;
-            double expectedAnswer = basen * djup * height;
+            double expectedAnswer = 1000;
 
             //Act
-            double actualAnswear = Volume.Kub(basen, djup, height);
+            double actualAnswear = volume.Kub(basen, djup, height);
 
             //Assert
-            Assert.That(actualAnswear, Is.EqualTo(expectedAnswer));
+            Assert.That(actualAnswear, Is.EqualTo(expectedAnswer).Within(0.001));
         }
 
         /// <summary>
@@ -44,13 +46,13 @@ namespace TestEnhetskonvertering
             double djup = 10;
             double height = 10;
             double area = 3;
-            double expectedAnswer = basen * djup * height / area;
+            double expectedAnswer = 333.333333333;
 
             //Act
-            double actualAnswear = Volume.Pyramid(basen, djup, height);
+            double actualAnswear = volume.Pyramid(basen, djup, height);
 
             //Assert
-            Assert.That(actualAnswear, Is.EqualTo(expectedAnswer));
+            Assert.That(actualAnswear, Is.EqualTo(expectedAnswer).Within(0.001));
         }
 
         /// <summary>
@@ -61,14 +63,13 @@ namespace TestEnhetskonvertering
         {
             //Arrange
             double radius = 10;
-            double area = 3;
-            double expectedAnswer = Math.Pow(radius, area) * 4 * Math.PI / area;
+            double expectedAnswer = 4188.79;
 
             //Act
-            double actualAnswear = Volume.Sphere(radius);
+            double actualAnswear = volume.Sphere(radius);
 
             //Assert
-            Assert.That(actualAnswear, Is.EqualTo(expectedAnswer));
+            Assert.That(actualAnswear, Is.EqualTo(expectedAnswer).Within(0.001));
         }
 
     }
