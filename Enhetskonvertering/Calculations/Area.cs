@@ -2,21 +2,21 @@
 
 namespace Enhetskonvertering
 {
-    internal struct Area
+    public class Area
     {
         private const int AREA = 2;
 
-        public static double Rektangel(double basen, double height)
+        public  double Rektangel(double basen, double height)
         {
             return  basen * height;
         }
 
-        public static double Triangel(double basen, double height)
+        public  double Triangel(double basen, double height)
         {
             return basen * height / AREA;
         }
 
-        public static double Cirkel(double radius)
+        public  double Cirkel(double radius)
         {
             return Math.Pow(radius, AREA) * Math.PI;
         }    

@@ -9,7 +9,7 @@ namespace Enhetskonvertering
         {
 
             IDisplayHandler displayhandler = new ConsoleDisplayer();
-            Meny men = new Meny(displayhandler, new Meny.ConsolInputHandler(displayhandler), new konverter(displayhandler));
+            Meny men = new Meny(displayhandler, new Meny.ConsolInputHandler(displayhandler), new Konverter(displayhandler));
 
             men.MainMeny();
             
@@ -18,7 +18,7 @@ namespace Enhetskonvertering
 
     public class ConsoleDisplayer : IDisplayHandler
     {
-        public static string PauseText()
+        public  string PauseText()
         {
            return "\nTryck på valfri tanget för att komma tillbaka till Menyn.";
         }
@@ -30,7 +30,7 @@ namespace Enhetskonvertering
 
         public void ShowMessege(string messege)
         {
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine(messege);
         }
     }

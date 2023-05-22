@@ -6,13 +6,14 @@ namespace Enhetskonvertering
     {
         public const string INPUTERROR = "Du har matat in ett felaktigt värde";
         public const string WRONG_INPUT = INPUTERROR + ", välj en siffra i menyn";
+        public const string PAUSE_TEXT = "\nTryck på valfri tangent för att komma tillbaka till Menyn.";
 
         private static int result;
         protected IDisplayHandler display;
         private IInputHandler input;
-        private konverter konvert;
+        private Konverter konvert;
 
-        public Meny(IDisplayHandler displayHandler, IInputHandler inputHandler, konverter konverter)
+        public Meny(IDisplayHandler displayHandler, IInputHandler inputHandler, Konverter konverter)
         {
             display = displayHandler;
             input = inputHandler;
