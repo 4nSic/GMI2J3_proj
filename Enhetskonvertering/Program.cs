@@ -1,5 +1,6 @@
 ﻿
 using System;
+using static Enhetskonvertering.Meny;
 
 namespace Enhetskonvertering
 {
@@ -9,7 +10,7 @@ namespace Enhetskonvertering
         {
 
             IDisplayHandler displayhandler = new ConsoleDisplayer();
-            Meny men = new Meny(displayhandler, new Meny.ConsolInputHandler(displayhandler), new Konverter(displayhandler));
+            Meny men = new Meny(displayhandler, new Meny.ConsolInputHandler(displayhandler), new Konverter(displayhandler, new Meny.ConsolInputHandler(displayhandler)));
 
             men.MainMeny();
             
