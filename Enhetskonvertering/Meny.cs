@@ -83,6 +83,10 @@ namespace Enhetskonvertering
         {
             private IDisplayHandler display;
 
+            public void AwaitInput() 
+            {
+                Console.ReadKey();
+            }
 
             public ConsolInputHandler(IDisplayHandler displayHandler)
             {

@@ -33,5 +33,10 @@ namespace Enhetskonvertering
             //Console.Clear();
             Console.WriteLine(messege);
         }
+
+        public void ClearedDisplay()
+        { 
+            Console.Clear(); 
+        }
     }
 }

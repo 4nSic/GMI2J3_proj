@@ -6,6 +6,7 @@ namespace Enhetskonvertering
     {
         private IDisplayHandler display;
 
+        private IInputHandler inputHandler;
         
         private Area area;
         private Celsius celsius;
@@ -20,9 +21,12 @@ namespace Enhetskonvertering
         private Volume volume;
         private Yard yard;
 
-        public Konverter(IDisplayHandler displayHandler) 
+        public Konverter(IDisplayHandler displayHandler, IInputHandler inputHandler) 
         {
-            display = displayHandler;          
+            display = displayHandler;
+
+            this.inputHandler = inputHandler;
+
             area = new Area();  
             celsius = new Celsius();
             cm = new Cm();
@@ -44,6 +48,7 @@ namespace Enhetskonvertering
                                                   $"{kelvin.ToFarenheit(temp):0.##} Farenheit\n" +
                                                   $"{kelvin.ToCelsius(temp):0.##} Celsius.");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Farenheits(double temp)
@@ -52,6 +57,7 @@ namespace Enhetskonvertering
                                                    $"{farenheit.ToCelsius(temp):0.##} Celsius\n" +
                                                    $"{farenheit.ToKelvin(temp):0.##} Kelvin.");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Celsiuss(double temp)
@@ -60,6 +66,7 @@ namespace Enhetskonvertering
                                                    $"{celsius.ToFarenheit(temp):0.##} Farenheit\n" +
                                                    $"{celsius.ToKelvin(temp):0.##} Kelvin.");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         /*      Konvertering av Cm Meter Inch Yard Foot           */
@@ -71,6 +78,7 @@ namespace Enhetskonvertering
                                                    $"{cm.ToYard(length):0.##} yard\n" +
                                                    $"{cm.ToFoot(length):0.##} foot");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Meters(double length)
@@ -81,6 +89,7 @@ namespace Enhetskonvertering
                                                     $"yard\n{meter.ToFoot(length):0.##} " +
                                                     $"foot");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Inches(double length)
@@ -91,6 +100,7 @@ namespace Enhetskonvertering
                                                    $"{inch.ToYard(length):0.##} yard\n" +
                                                    $"{inch.ToFoot(length):0.##} foot");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Yards(double length)
@@ -101,6 +111,7 @@ namespace Enhetskonvertering
                                                    $"{yard.ToInch(length):0.##} inch\n" +
                                                    $"{yard.ToFoot(length):0.##} foot");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Foots(double length)
@@ -111,6 +122,7 @@ namespace Enhetskonvertering
                                                    $"{foot.ToInch(length):0.##} inch\n" +
                                                    $"{foot.ToYard(length):0.##} yard");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         /*      Konvertering av hastigheter           */
@@ -120,6 +132,7 @@ namespace Enhetskonvertering
             display.ShowMessege($"Om du färdas {distance}km på {time} minuter \n" +
                               $"Har du hållit denna hastighet {movement.Speed(distance, time):0.##}km/h");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Time(double distance, double speed)
@@ -127,6 +140,7 @@ namespace Enhetskonvertering
             display.ShowMessege($"Om du färdas {distance}km och håller {speed} km/h \n" +
                               $"Blir resetiden {movement.Time(distance, speed):0.##} minuter");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Distance(double speed, double time)
@@ -134,6 +148,7 @@ namespace Enhetskonvertering
             display.ShowMessege($"Om du färdas i {speed}km/h och resetiden blir {time} minuter \n" +
                               $"Blir sträckan {movement.Distance(speed, time):0.##}km");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         /*      Beräkning av area                     */
@@ -143,7 +158,8 @@ namespace Enhetskonvertering
                 display.ShowMessege($"En Rektangel med basen {basen}cm och höjden {height}cm \n" +
                                   $"har arean {area.Rektangel(basen, height):0.##}cm\u00b2");
                 display.ShowMessege(Meny.PAUSE_TEXT);
-            
+                inputHandler.AwaitInput();
+
         }
 
         public void Triangel(double basen, double height)
@@ -152,7 +168,8 @@ namespace Enhetskonvertering
                 display.ShowMessege($"En Triangel med basen {basen}cm och höjden {height}cm \n" +
                                   $"har arean {area.Triangel(basen, height):0.##}cm\u00b2");
                 display.ShowMessege(Meny.PAUSE_TEXT);
-            
+                inputHandler.AwaitInput();
+
         }
 
         public void Cirkel(double radius)
@@ -161,6 +178,7 @@ namespace Enhetskonvertering
                 display.ShowMessege($"En Cirkel med radie {radius:0.##}cm \n" +
                                   $"har arean {area.Cirkel(radius):0.##}cm\u00b2");
                 display.ShowMessege(Meny.PAUSE_TEXT);
+                inputHandler.AwaitInput();
            
         }
 
@@ -172,6 +190,7 @@ namespace Enhetskonvertering
                               $"samt höjden {height:0.##}cm \n" +
                               $"har volymen {volume.Kub(basen, djup, height):0.##}cm\u00b3");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Pyramid(double basen, double djup, double height)
@@ -181,6 +200,7 @@ namespace Enhetskonvertering
                               $"samt höjden {height:0.##}cm \n" +
                               $"har volymen {volume.Pyramid(basen, djup, height):0.##}cm\u00b3");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Sphere(double radius)
@@ -188,6 +208,7 @@ namespace Enhetskonvertering
             display.ShowMessege($"En Sphere med radie {radius:0.##}cm \n" +
                               $"har volymen {volume.Sphere(radius):0.##}cm\u00b3");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         /*      Beräkning av ohms law                    */
@@ -197,6 +218,7 @@ namespace Enhetskonvertering
                               $"över ett motstånd på {resistance:0.##} \u2126 \n" +
                               $"ger en spänning på {ohmslaw.Voltage(current, resistance):0.##} volt");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Current(double voltage, double resistance)
@@ -205,6 +227,7 @@ namespace Enhetskonvertering
                               $"över ett motstånd på {resistance:0.##} \u2126 \n" +
                               $"ger en ström på {ohmslaw.Current(voltage, resistance):0.##} amp");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Resistance(double voltage, double current)
@@ -213,6 +236,7 @@ namespace Enhetskonvertering
                               $" med en ström på {current:0.##}amp \n" +
                               $"ger ett motstånd på {ohmslaw.Resistance(voltage, current):0.##} \u2126");
             display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
     }
 }

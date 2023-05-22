@@ -7,5 +7,7 @@
         public bool ReadInput(string typ, string unit, out double result);
 
         public bool ReadInput(Meny.TempMenyChoices tempTyp, out double result);
+
+        public void AwaitInput();
     }
 }
