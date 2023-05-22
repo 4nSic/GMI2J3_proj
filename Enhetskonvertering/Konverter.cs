@@ -20,25 +20,20 @@ namespace Enhetskonvertering
 
         public void Farenheits(double temp)
         {
-            Console.WriteLine("{0:#.##} Farenheit motsvarar\n{1:#.##} Celsius\n{2:#.##} Kelvin.", temp, Farenheit.ToCelsius(temp), 
-                                                                                                        Farenheit.ToKelvin(temp));
+            display.ShowMessege($"{temp} Farenheit motsvarar\n{Farenheit.ToCelsius(temp)} Celsius\n{Farenheit.ToKelvin(temp)} Kelvin.");
             Utilities.PauseText();
         }
 
         public void Celsiuss(double temp)
         {
-            Console.WriteLine("{0:#.##} Celsius motsvarar\n{1:#.##} Farenheit\n{2:#.##} Kelvin.", temp, Celsius.ToFarenheit(temp), 
-                                                                                                        Celsius.ToKelvin(temp));
+            display.ShowMessege($"{temp} Celsius motsvarar\n{Celsius.ToFarenheit(temp)} Farenheit\n{Celsius.ToKelvin(temp)} Kelvin.");
             Utilities.PauseText();
         }
 
         /*      Konvertering av Cm Meter Inch Yard Foot           */
         public void Centimeter(double length)
         {
-            Console.WriteLine("{0:0.##} cm motsvarar\n{1:0.##} meter\n{2:0.##} inch\n{3:0.##} yard\n{4:0.##} foot", length, Cm.ToMeter(length), 
-                                                                                                                            Cm.ToInch(length), 
-                                                                                                                            Cm.ToYard(length), 
-                                                                                                                            Cm.ToFoot(length));
+            display.ShowMessege($"{length} cm motsvarar\n{Cm.ToMeter(length)} meter\n{Cm.ToInch(length)} inch\n{Cm.ToYard(length)} yard\n{Cm.ToFoot(length)} foot");
             Utilities.PauseText();
         }
 
