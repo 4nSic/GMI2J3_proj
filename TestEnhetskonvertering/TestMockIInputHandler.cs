@@ -5,7 +5,7 @@ using Moq;
 
 namespace TestEnhetskonvertering
 {
-    public class TestMockMovement
+    public class TestMockIInputHandler
     {
         [SetUp]
         public void Setup()
@@ -16,7 +16,7 @@ namespace TestEnhetskonvertering
         /// Mockar Speed med nya in parameterar
         /// </summary>
         [Test]
-        public void Test_Mock_Movement_Speed()
+        public void Test_Mock_IInputHandler()
         {
             //Arrange
      
