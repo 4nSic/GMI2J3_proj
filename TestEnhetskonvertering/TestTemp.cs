@@ -14,13 +14,16 @@ namespace TestEnhetskonvertering
         /// <summary>
         /// Test konvertera Tempraturen från Celsius till Fahrenheit
         /// </summary>
-        [Test]
-        public void Test_From_Celsius_To_Fahrenhiet()
+        [TestCase(0, 32)]
+        [TestCase(100, 212)]
+        [TestCase(-100, -148)]
+
+        public void Test_From_Celsius_To_Fahrenhiet(int celsiustest,int expectedAnswear)
         {
 
             //Arrange
-            double celsiustest = 5;
-            double expectedAnswear = 41;
+            //double celsiustest = 5;
+            //double expectedAnswear = 41;
 
             //Act
             double actualAnswear = celsius.ToFarenheit(celsiustest);
