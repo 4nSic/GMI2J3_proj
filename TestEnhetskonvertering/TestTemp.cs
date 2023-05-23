@@ -17,7 +17,6 @@ namespace TestEnhetskonvertering
         [TestCase(0, 32)]
         [TestCase(100, 212)]
         [TestCase(-100, -148)]
-
         public void Test_From_Celsius_To_Fahrenhiet(int celsiustest,int expectedAnswear)
         {
 
