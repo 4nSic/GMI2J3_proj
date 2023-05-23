@@ -227,7 +227,7 @@ namespace Enhetskonvertering
         {
 
             bool run = true;
-
+            string menu = "Tempratur meny\n1) Celsius\n2) Fahrenheit\n3) Kelvin\n4) Till huvudmenyn";
 
             while (run)
             {
@@ -235,11 +235,11 @@ namespace Enhetskonvertering
                 do
                 {
                     display.ClearedDisplay();    
-                    display.ShowMessege("Tempratur meny\n");
-                    display.ShowMessege("1) Celsius ");
-                    display.ShowMessege("2) Fahrenheit");
-                    display.ShowMessege("3) Kelvin");
-                    display.ShowMessege("4) Till huvudmenyn");
+                    display.ShowMessege(menu);
+                    //display.ShowMessege("1) Celsius ");
+                    //display.ShowMessege("2) Fahrenheit");
+                    //display.ShowMessege("3) Kelvin");
+                    //display.ShowMessege("4) Till huvudmenyn");
                     
                 }
                 while (!input.ReadInput(out result));
