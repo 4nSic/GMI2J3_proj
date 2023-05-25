@@ -1,6 +1,7 @@
 ﻿
 namespace Enhetskonvertering
 {
+
     public class Celsius
     {
         public  double ToFarenheit(double celsius)

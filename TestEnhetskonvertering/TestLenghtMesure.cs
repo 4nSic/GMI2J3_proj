@@ -37,7 +37,6 @@ namespace TestEnhetskonvertering
 
             //Assert
             Assert.That(actualAnswear, Is.EqualTo(expectedAnswer).Within(0.01), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswer}");
-
         }
 
         /// <summary>
@@ -56,7 +55,6 @@ namespace TestEnhetskonvertering
 
             //Assert
             Assert.That(actualAnswear, Is.EqualTo(expectedAnswear).Within(0.01), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
-
         }
 
 
@@ -75,6 +73,7 @@ namespace TestEnhetskonvertering
        
             //Act
             Assert.That(actualAnswear, Is.EqualTo(expectedAnswear).Within(0.01), message: $"Det fungerade inte {actualAnswear} ger inte {expectedAnswear}");
+
         }
 
         /// <summary>

@@ -3,11 +3,10 @@ namespace Enhetskonvertering
 {
     public class Meter
     {
-
-        private const int CM = 100;
-        private const double INCH = 0.0254;
-        private const double YARD = 1.0936133;
-        private const double FOOT = 3.2808399;
+        public const int CM = 100;
+        public const double INCH = 0.0254;
+        public const double YARD = 1.0936133;
+        public const double FOOT = 3.2808399;
 
 
         public double ToCm(double meter)
