@@ -2,165 +2,241 @@
 
 namespace Enhetskonvertering
 {
-    public class konverter
+    public class Konverter
     {
         private IDisplayHandler display;
 
-        public konverter(IDisplayHandler displayHandler) 
+        private IInputHandler inputHandler;
+        
+        private Area area;
+        private Celsius celsius;
+        private Cm cm;
+        private Farenheit farenheit;
+        private Foot foot;
+        private Inch inch;
+        private Kelvin kelvin;
+        private Meter meter;
+        private Movement movement;
+        private Ohmslaw ohmslaw;
+        private Volume volume;
+        private Yard yard;
+
+        public Konverter(IDisplayHandler displayHandler, IInputHandler inputHandler) 
         {
             display = displayHandler;
+
+            this.inputHandler = inputHandler;
+
+            area = new Area();  
+            celsius = new Celsius();
+            cm = new Cm();
+            farenheit = new Farenheit();
+            foot = new Foot();
+            inch = new Inch(); 
+            kelvin = new Kelvin();
+            meter = new Meter();
+            movement = new Movement();
+            ohmslaw = new Ohmslaw();   
+            volume = new Volume();
+            yard = new Yard();
         }
 
         /*      Konvertering av Celsius Farenheit & Kelvin        */
         public void Kelvins(double temp)
         {
-            display.ShowMessege($"{temp} Kelvin motsvarar\n{Kelvin.ToFarenheit(temp)} Farenheit\n{Kelvin.ToCelsius(temp)} Celsius.");
-            Utilities.PauseText();
+            display.ShowMessege($"{temp} Kelvin motsvarar\n" +
+                                                  $"{kelvin.ToFarenheit(temp):0.##} Farenheit\n" +
+                                                  $"{kelvin.ToCelsius(temp):0.##} Celsius.");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Farenheits(double temp)
         {
-            Console.WriteLine("{0:#.##} Farenheit motsvarar\n{1:#.##} Celsius\n{2:#.##} Kelvin.", temp, Farenheit.ToCelsius(temp), 
-                                                                                                        Farenheit.ToKelvin(temp));
-            Utilities.PauseText();
+            display.ShowMessege($"{temp} Farenheit motsvarar\n" +
+                                                   $"{farenheit.ToCelsius(temp):0.##} Celsius\n" +
+                                                   $"{farenheit.ToKelvin(temp):0.##} Kelvin.");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Celsiuss(double temp)
         {
-            Console.WriteLine("{0:#.##} Celsius motsvarar\n{1:#.##} Farenheit\n{2:#.##} Kelvin.", temp, Celsius.ToFarenheit(temp), 
-                                                                                                        Celsius.ToKelvin(temp));
-            Utilities.PauseText();
+            display.ShowMessege($"{temp} Celsius motsvarar\n" +
+                                                   $"{celsius.ToFarenheit(temp):0.##} Farenheit\n" +
+                                                   $"{celsius.ToKelvin(temp):0.##} Kelvin.");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         /*      Konvertering av Cm Meter Inch Yard Foot           */
         public void Centimeter(double length)
         {
-            Console.WriteLine("{0:0.##} cm motsvarar\n{1:0.##} meter\n{2:0.##} inch\n{3:0.##} yard\n{4:0.##} foot", length, Cm.ToMeter(length), 
-                                                                                                                            Cm.ToInch(length), 
-                                                                                                                            Cm.ToYard(length), 
-                                                                                                                            Cm.ToFoot(length));
-            Utilities.PauseText();
+            display.ShowMessege($"{length} cm motsvarar\n" +
+                                                   $"{cm.ToMeter(length):0.##} meter\n" +
+                                                   $"{cm.ToInch(length):0.##} inch\n" +
+                                                   $"{cm.ToYard(length):0.##} yard\n" +
+                                                   $"{cm.ToFoot(length):0.##} foot");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Meters(double length)
         {
-            Console.WriteLine("{0:0.##} meter motsvarar\n{1:0.##} cm\n{2:0.##} inch\n{3:0.##} yard\n{4:0.##} foot", length, Meter.ToCm(length), 
-                                                                                                                            Meter.ToInch(length), 
-                                                                                                                            Meter.ToYard(length), 
-                                                                                                                            Meter.ToFoot(length));
-            Utilities.PauseText();
+            display.ShowMessege($"{length} meter motsvarar\n{meter.ToCm(length):0.##} " +
+                                                    $"cm\n{meter.ToInch(length):0.##} " +
+                                                    $"inch\n{meter.ToYard(length):0.##} " +
+                                                    $"yard\n{meter.ToFoot(length):0.##} " +
+                                                    $"foot");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Inches(double length)
         {
-            Console.WriteLine("{0:0.##} inches motsvarar\n{1:0.##} cm\n{2:0.##} meter\n{3:0.##} yard\n{4:0.##} foot", length, Inch.ToCm(length), 
-                                                                                                                              Inch.ToMeter(length), 
-                                                                                                                              Inch.ToYard(length), 
-                                                                                                                              Inch.ToFoot(length));
-            Utilities.PauseText();
+            display.ShowMessege($"{length} inches motsvarar\n" +
+                                                   $"{inch.ToCm(length):0.##} cm\n" +
+                                                   $"{inch.ToMeter(length):0.##} meter\n" +
+                                                   $"{inch.ToYard(length):0.##} yard\n" +
+                                                   $"{inch.ToFoot(length):0.##} foot");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Yards(double length)
         {
-            Console.WriteLine("{0:0.##} yards motsvarar\n{1:0.##} cm\n{2:0.##} meter\n{3:0.##} inch\n{4:0.##} foot", length, Yard.ToCm(length), 
-                                                                                                                             Yard.ToMeter(length), 
-                                                                                                                             Yard.ToInch(length), 
-                                                                                                                             Yard.ToFoot(length));
-            Utilities.PauseText();
+            display.ShowMessege($"{length} yards motsvarar\n" +
+                                                   $"{yard.ToCm(length):0.##} cm\n" +
+                                                   $"{yard.ToMeter(length):0.##} meter\n" +
+                                                   $"{yard.ToInch(length):0.##} inch\n" +
+                                                   $"{yard.ToFoot(length):0.##} foot");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Foots(double length)
         {
-            Console.WriteLine("{0:0.##} foot motsvarar\n{1:0.##} cm\n{2:0.##} meter\n{3:0.##} inch\n{4:0.##} yard", length, Foot.ToCm(length), 
-                                                                                                                            Foot.ToMeter(length), 
-                                                                                                                            Foot.ToInch(length), 
-                                                                                                                            Foot.ToYard(length));
-            Utilities.PauseText();
+            display.ShowMessege($"{length} foot motsvarar\n" +
+                                                   $"{foot.ToCm(length):0.##} cm\n" +
+                                                   $"{foot.ToMeter(length):0.##} meter\n" +
+                                                   $"{foot.ToInch(length):0.##} inch\n" +
+                                                   $"{foot.ToYard(length):0.##} yard");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         /*      Konvertering av hastigheter           */
         public void Speed(double distance, double time)
         {
 
-            Console.WriteLine("Om du färdas {0:0.##}km på {1:0.##} minuter \nHar du hållit denna hastighet {2:0.##}km/h", distance, time, Movement.Speed(distance, time));
-            Utilities.PauseText();
+            display.ShowMessege($"Om du färdas {distance}km på {time} minuter \n" +
+                              $"Har du hållit denna hastighet {movement.Speed(distance, time):0.##}km/h");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Time(double distance, double speed)
         {
-            Console.WriteLine("Om du färdas {0:0.##}km och håller {1:0.##} km/h \nBlir resetiden {2:0.##} minuter", distance, speed, Movement.Time(distance, speed));
-            Utilities.PauseText();
+            display.ShowMessege($"Om du färdas {distance}km och håller {speed} km/h \n" +
+                              $"Blir resetiden {movement.Time(distance, speed):0.##} minuter");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Distance(double speed, double time)
         {
-            Console.WriteLine("Om du färdas i {0:0.##}km/h och resetiden blir {1:0.##} minuter \nBlir sträckan {2:0.##}km", speed, time, Movement.Distance(speed, time));
-            Utilities.PauseText();
+            display.ShowMessege($"Om du färdas i {speed}km/h och resetiden blir {time} minuter \n" +
+                              $"Blir sträckan {movement.Distance(speed, time):0.##}km");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         /*      Beräkning av area                     */
         public void Rektangel(double basen, double height)
         {
             
-                Console.WriteLine("En Rektangel med basen {0:0.##}cm och höjden {1:0.##}cm \nhar arean {2:0.##}cm\u00b2", basen, height, Area.Rektangel(basen, height));
-                Utilities.PauseText();
-            
+                display.ShowMessege($"En Rektangel med basen {basen}cm och höjden {height}cm \n" +
+                                  $"har arean {area.Rektangel(basen, height):0.##}cm\u00b2");
+                display.ShowMessege(Meny.PAUSE_TEXT);
+                inputHandler.AwaitInput();
+
         }
 
         public void Triangel(double basen, double height)
         {
             
-                Console.WriteLine("En Triangel med basen {0:0.##}cm och höjden {1:0.##}cm \nhar arean {2:0.##}cm\u00b2", basen, height, Area.Triangel(basen, height));
-                Utilities.PauseText();
-            
+                display.ShowMessege($"En Triangel med basen {basen}cm och höjden {height}cm \n" +
+                                  $"har arean {area.Triangel(basen, height):0.##}cm\u00b2");
+                display.ShowMessege(Meny.PAUSE_TEXT);
+                inputHandler.AwaitInput();
+
         }
 
         public void Cirkel(double radius)
         {
             
-                Console.WriteLine("En Cirkel med radie {0:0.##}cm \nhar arean {1:0.##}cm\u00b2", radius, Area.Cirkel(radius));
-                Utilities.PauseText();
+                display.ShowMessege($"En Cirkel med radie {radius:0.##}cm \n" +
+                                  $"har arean {area.Cirkel(radius):0.##}cm\u00b2");
+                display.ShowMessege(Meny.PAUSE_TEXT);
+                inputHandler.AwaitInput();
            
         }
 
         /*      Beräkning av volym                     */
         public void Kub(double basen, double djup, double height)
         {
-            Console.WriteLine("Ett rätblock med basen {0:0.##}cm och djupet {1:0.##}cm samt höjden {2:0.##}cm \nhar volymen {3:0.##}cm\u00b3", basen, djup, height, 
-                                                                                                                              Volume.Kub(basen, djup, height));
-            Utilities.PauseText();
+            display.ShowMessege($"Ett rätblock med basen {basen:0.##}cm " +
+                              $"och djupet {djup:0.##}cm " +
+                              $"samt höjden {height:0.##}cm \n" +
+                              $"har volymen {volume.Kub(basen, djup, height):0.##}cm\u00b3");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Pyramid(double basen, double djup, double height)
         {
-            Console.WriteLine("En Pyramid med basen {0:0.##}cm och djupet {1:0.##}cm samt höjden {2:0.##}cm \nhar volymen {3:0.##}cm\u00b3", basen, djup, height,
-                                                                                                                              Volume.Pyramid(basen, djup, height));
-            Utilities.PauseText();
+            display.ShowMessege($"En Pyramid med basen {basen:0.##}cm " +
+                              $"och djupet {djup:0.##}cm " +
+                              $"samt höjden {height:0.##}cm \n" +
+                              $"har volymen {volume.Pyramid(basen, djup, height):0.##}cm\u00b3");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Sphere(double radius)
         {
-            Console.WriteLine("En Sphere med radie {0:0.##}cm \nhar volymen {1:0.##}cm\u00b3", radius, Volume.Sphere(radius));
-            Utilities.PauseText();
+            display.ShowMessege($"En Sphere med radie {radius:0.##}cm \n" +
+                              $"har volymen {volume.Sphere(radius):0.##}cm\u00b3");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         /*      Beräkning av ohms law                    */
         public void Voltage(double current, double resistance)
         {        
-            Console.WriteLine("En ström på {0:0.##} amp över ett motstånd på {1:0.##} \u2126 \nger en spänning på {2:0.##} volt", current, resistance, Ohmslaw.Voltage(current, resistance));
-            Utilities.PauseText();
+            display.ShowMessege($"En ström på {current:0.##} amp " +
+                              $"över ett motstånd på {resistance:0.##} \u2126 \n" +
+                              $"ger en spänning på {ohmslaw.Voltage(current, resistance):0.##} volt");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Current(double voltage, double resistance)
         {
-            Console.WriteLine("En spänning på {0:0.##} volt över ett motstånd på {1:0.##} \u2126 \nger en ström på {2:0.##} amp", voltage, resistance, Ohmslaw.Current(voltage, resistance));
-            Utilities.PauseText();
+            display.ShowMessege($"En spänning på {voltage:0.##} volt " +
+                              $"över ett motstånd på {resistance:0.##} \u2126 \n" +
+                              $"ger en ström på {ohmslaw.Current(voltage, resistance):0.##} amp");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
 
         public void Resistance(double voltage, double current)
         {
-            Console.WriteLine("En spänning på {0:0.##} volt med en ström på {1:0.##}amp \nger ett motstånd på {2:0.##} \u2126", voltage, current, Ohmslaw.Resistance(voltage, current));
-            Utilities.PauseText();
+            display.ShowMessege($"En spänning på {voltage:0.##} volt" +
+                              $" med en ström på {current:0.##}amp \n" +
+                              $"ger ett motstånd på {ohmslaw.Resistance(voltage, current):0.##} \u2126");
+            display.ShowMessege(Meny.PAUSE_TEXT);
+            inputHandler.AwaitInput();
         }
     }
 }

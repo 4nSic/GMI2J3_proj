@@ -6,13 +6,14 @@ namespace Enhetskonvertering
     {
         public const string INPUTERROR = "Du har matat in ett felaktigt värde";
         public const string WRONG_INPUT = INPUTERROR + ", välj en siffra i menyn";
+        public const string PAUSE_TEXT = "\nTryck på valfri tangent för att komma tillbaka till Menyn.";
 
         private static int result;
         protected IDisplayHandler display;
         private IInputHandler input;
-        private konverter konvert;
+        private Konverter konvert;
 
-        public Meny(IDisplayHandler displayHandler, IInputHandler inputHandler, konverter konverter)
+        public Meny(IDisplayHandler displayHandler, IInputHandler inputHandler, Konverter konverter)
         {
             display = displayHandler;
             input = inputHandler;
@@ -82,6 +83,10 @@ namespace Enhetskonvertering
         {
             private IDisplayHandler display;
 
+            public void AwaitInput() 
+            {
+                Console.ReadKey();
+            }
 
             public ConsolInputHandler(IDisplayHandler displayHandler)
             {
@@ -179,6 +184,7 @@ namespace Enhetskonvertering
             {
                 do
                 {
+                    display.ClearedDisplay();
                     display.ShowMessege(menu);
                 }
                 while (!input.ReadInput(out result));
@@ -221,19 +227,19 @@ namespace Enhetskonvertering
         {
 
             bool run = true;
-
+            string menu = "Tempratur meny\n1) Celsius\n2) Fahrenheit\n3) Kelvin\n4) Till huvudmenyn";
 
             while (run)
             {
 
                 do
                 {
-                    Console.Clear();
-                    display.ShowMessege("Tempratur meny\n");
-                    display.ShowMessege("1) Celsius ");
-                    display.ShowMessege("2) Fahrenheit");
-                    display.ShowMessege("3) Kelvin");
-                    display.ShowMessege("4) Till huvudmenyn");
+                    display.ClearedDisplay();    
+                    display.ShowMessege(menu);
+                    //display.ShowMessege("1) Celsius ");
+                    //display.ShowMessege("2) Fahrenheit");
+                    //display.ShowMessege("3) Kelvin");
+                    //display.ShowMessege("4) Till huvudmenyn");
                     
                 }
                 while (!input.ReadInput(out result));
@@ -300,7 +306,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();
                     display.ShowMessege("Längd Meny\n");
                     display.ShowMessege("1) Centemeter ");
                     display.ShowMessege("2) Meter");
@@ -390,7 +396,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();       
                     display.ShowMessege("SpeedMeny\n");
                     display.ShowMessege("1) Beräkna hastighet");
                     display.ShowMessege("2) Beräkna Tid");
@@ -469,7 +475,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();
                     display.ShowMessege("Area Meny\n");
                     display.ShowMessege("1) Rektangel ");
                     display.ShowMessege("2) Triangel");
@@ -543,7 +549,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();
                     display.ShowMessege("Volym Meny\n");
                     display.ShowMessege("1) Rätblock ");
                     display.ShowMessege("2) Pyramid");
@@ -626,7 +632,7 @@ namespace Enhetskonvertering
 
                 do
                 {
-                    Console.Clear();
+                    display.ClearedDisplay();
                     display.ShowMessege("El meny\n");
                     display.ShowMessege("1) Spänning");
                     display.ShowMessege("2) Ström");

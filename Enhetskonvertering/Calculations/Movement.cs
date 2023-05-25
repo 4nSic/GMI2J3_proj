@@ -1,22 +1,21 @@
 ﻿
 namespace Enhetskonvertering
 {
-
-    public struct Movement
+    public class Movement
     {
         private const int MINUTS_IN_AN_HOUR = 60;
 
-        public static double Speed(double distance, double time)
+        public  double Speed(double distance, double time)
         {
             return distance / (time / MINUTS_IN_AN_HOUR);
         }
 
-        public static double Time(double distance, double speed)
+        public  double Time(double distance, double speed)
         {
             return (distance / speed) * MINUTS_IN_AN_HOUR;
         }
 
-        public static double Distance(double speed, double time)
+        public  double Distance(double speed, double time)
         {
             return speed * (time / MINUTS_IN_AN_HOUR);
         }

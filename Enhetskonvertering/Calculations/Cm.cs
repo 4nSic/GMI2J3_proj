@@ -1,29 +1,29 @@
 ﻿
 namespace Enhetskonvertering
 {
-    internal struct Cm
+    public class Cm
     {
         private const int METER =100;
         private const double INCH = 2.54;
         private const double YARD = 0.010936133;
         private const double FOOT = 0.032808399;
 
-        public static double ToMeter(double cm)
+        public  double ToMeter(double cm)
         {
             return cm / METER;
         }
 
-        public static double ToInch(double cm)
+        public  double ToInch(double cm)
         {
             return cm / INCH;
         }
 
-        public static double ToYard(double cm)
+        public  double ToYard(double cm)
         {
             return cm * YARD;
         }
 
-        public static double ToFoot(double cm)
+        public  double ToFoot(double cm)
         {
             return cm * FOOT;
         }
